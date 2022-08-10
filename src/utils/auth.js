@@ -33,7 +33,7 @@ export const isValidBearerToken = (token) => {
             return false;
         }
     } catch (err) {
-        console.error(err);
+        console.log(err);
         return false;
     }
     return true;

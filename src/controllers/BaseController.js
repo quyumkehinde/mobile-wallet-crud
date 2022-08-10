@@ -16,6 +16,3 @@ export const sendError = (res, message, statusCode) => {
 export const home = async (req, res) => {
     return sendSuccess(res, 'Welcome to Lendsqr API.');
 }
-export const notFound = async () => {
-    return sendError(res, 'Please check the link and try again.', 404);
-}

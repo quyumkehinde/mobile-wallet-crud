@@ -1,4 +1,4 @@
-import db from "../config/database.js";
+import db from "../config/Database.js";
 import { createTransaction, findTransactionById } from "../repositories/TransactionRepository.js";
 import { decrementUserBalance, findUserById, incrementUserBalance } from "../repositories/UserRepository.js";
 import { decryptJWT, isValidBearerToken } from "../utils/auth.js";
@@ -6,10 +6,7 @@ import { sendSuccess, sendError } from "./BaseController.js";
 import { InsufficientBalanceException } from '../exceptions/TransactionExceptions.js'
 
 export const depositFund = async (req, res) => {
-    let token = req.headers.authorization;
-    if (!isValidBearerToken(token)) {
-        return sendError(res, 'Unauthorized!', 401);
-    }
+    const token = req.headers.authorization;
     if (!req.body.amount) {
         return sendError(res, 'The amount field is required', 400);
     }
@@ -26,16 +23,13 @@ export const depositFund = async (req, res) => {
         const transaction = await findTransactionById(transactionId[0]);
         return sendSuccess(res, 'Successfully funded account.', transaction);
     } catch (err) {
-        console.error(err);
+        console.log(err);
         return sendError(res, 'Error occured! Please try again.', 500);
     }
 }
 
 export const withdrawFund = async (req, res) => {
-    let token = req.headers.authorization;
-    if (!isValidBearerToken(token)) {
-        return sendError(res, 'Unauthorized!', 401);
-    }
+    const token = req.headers.authorization;
     if (!req.body.amount) {
         return sendError(res, 'The amount field is required', 400);
     }
@@ -56,7 +50,7 @@ export const withdrawFund = async (req, res) => {
         const transaction = await findTransactionById(transactionId[0]);
         return sendSuccess(res, 'Withdrawal has been processed successfully.', transaction);
     } catch (err) {
-        console.error(err);
+        console.log(err);
         if (err.name === 'InsufficientBalanceException') {
             return sendError(res, err.message, 400);
         }
@@ -65,10 +59,7 @@ export const withdrawFund = async (req, res) => {
 }
 
 export const transferFund = async (req, res) => {
-    let token = req.headers.authorization;
-    if (!isValidBearerToken(token)) {
-        return sendError(res, 'Unauthorized!', 401);
-    }
+    const token = req.headers.authorization;
     if (!req.body.amount) {
         return sendError(res, 'The amount field is required', 400);
     }
@@ -101,7 +92,7 @@ export const transferFund = async (req, res) => {
         const transaction = await findTransactionById(transactionId[0]);
         return sendSuccess(res, 'Transfer completed successfully.', transaction);
     } catch (err) {
-        console.error(err);
+        console.log(err);
         if (err.name === 'InsufficientBalanceException') {
             return sendError(res, err.message, 400);
         }
