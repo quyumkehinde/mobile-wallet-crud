@@ -1,0 +1,33 @@
+{
+  "name": "lendsqr",
+  "version": "1.0.0",
+  "description": "Lendsqr Assessment",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest --config ./jest.config.json",
+    "start": "node src/index",
+    "dev": "nodemon src/index",
+    "db:migrate": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:latest --knexfile src/knexfile.js",
+    "db:rollback": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:rollback --knexfile src/knexfile.js"
+  },
+  "author": "Quyum Kehinde",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^2.2.0",
+    "mysql": "^2.18.1",
+    "sqlite3": "^5.0.11",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "babel-jest": "^28.1.3",
+    "jest": "^28.1.3",
+    "nodemon": "^2.0.19"
+  }
+}
