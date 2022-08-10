@@ -4,6 +4,7 @@ import { decrementUserBalance, findUserById, incrementUserBalance } from "../rep
 import { decryptJWT, isValidBearerToken } from "../utils/auth.js";
 import { sendSuccess, sendError } from "./BaseController.js";
 import { InsufficientBalanceException } from '../exceptions/TransactionExceptions.js'
+import { createTransfer } from "../repositories/TransferRepository.js";
 
 export const depositFund = async (req, res) => {
     const token = req.headers.authorization;
@@ -16,7 +17,7 @@ export const depositFund = async (req, res) => {
         await db.transaction(async trx => {
             const { id: userId } = decryptJWT(token.split(' ')[1]);
             [transactionId] = await Promise.all([
-                createTransaction(userId, req.body.amount, 'credit', 'paystack', trx),
+                createTransaction(userId, req.body.amount, 'credit', 'paymentProcessor', trx),
                 incrementUserBalance(userId, req.body.amount, trx),
             ]);
         });
@@ -43,7 +44,7 @@ export const withdrawFund = async (req, res) => {
                 throw new InsufficientBalanceException();
             }
             [transactionId] = await Promise.all([
-                createTransaction(userId, req.body.amount, 'debit', 'withdrawal', trx),
+                createTransaction(userId, req.body.amount, 'debit', 'paymentProcessor', trx),
                 decrementUserBalance(userId, req.body.amount, trx),
             ]);
         });
@@ -72,8 +73,8 @@ export const transferFund = async (req, res) => {
         return sendError(res, 'The recipient ID is invalid.', 400)
     }
 
-    let transactionId;
     try {
+        let debitId, creditId;
         await db.transaction(async trx => {
             const [sender, recipient] = await Promise.all([
                 findUserById(userId, trx),
@@ -82,14 +83,15 @@ export const transferFund = async (req, res) => {
             if (sender.account_balance < amount) {
                 throw new InsufficientBalanceException();
             }
-            [transactionId] = await Promise.all([
+            [debitId, creditId] = await Promise.all([
                 createTransaction(sender.id, amount, 'debit', 'transfer', trx),
-                decrementUserBalance(sender.id, amount, trx),
                 createTransaction(recipient.id, amount, 'credit', 'transfer', trx),
+                decrementUserBalance(sender.id, amount, trx),
                 incrementUserBalance(recipient.id, amount, trx),
             ]);
+            await createTransfer(creditId, debitId, amount, trx);
         });
-        const transaction = await findTransactionById(transactionId[0]);
+        const transaction = await findTransactionById(debitId[0]);
         return sendSuccess(res, 'Transfer completed successfully.', transaction);
     } catch (err) {
         console.log(err);

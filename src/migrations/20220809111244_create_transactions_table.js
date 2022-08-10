@@ -10,10 +10,10 @@ export function up(knex) {
             .notNullable()
             .references('id')
             .inTable('users')
-            .onDelete('cascade'); // NOTE: My assumption is that we don't want to keep the transaction history of a deleted user.
+            .onDelete('cascade');
         t.decimal('amount', 19, 4).notNullable();
         t.enum('type', ['credit', 'debit']).notNullable();
-        t.enum('source', ['withdrawal', 'paystack', 'transfer']).notNullable();
+        t.enum('source', ['paymentProcessor', 'transfer']).notNullable();
         t.timestamps(true, true);
     });
 };

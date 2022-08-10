@@ -2,7 +2,7 @@ import db from "../config/Database.js"
 
 export const createTransaction = async (userId, amount, type, source, trx) => {
     let response = db('transactions').insert({
-        'user_id': userId,
+        user_id: userId,
         amount,
         type,
         source,

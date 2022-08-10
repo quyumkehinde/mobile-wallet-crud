@@ -11,7 +11,7 @@ export const register = async (req, res) => {
 
     try {
         const [userId] = await createUser(req.body.email, req.body.password);
-        return sendSuccess('Registration successful', {
+        return sendSuccess(res, 'Registration successful', {
             token: generateJWT(userId),
         });
     } catch (err) {
