@@ -1,19 +1,21 @@
-import { response } from "express";
-
-export const successResponse = (message, data) => {
-    return response.status(200).json({
+export const sendSuccess = (res, message, data) => {
+    return res.json({
         success: true,
         message: message || 'Success.',
         data: data || {}
-    });
+    }).status(200);
 }
 
-export const errorResponse = (message, statusCode) => {
-    return response.status(statusCode || 500).json({
+export const sendError = (res, message, statusCode) => {
+    return res.json({
         success: false,
         message: message || 'Error occured. Please try again later.',
-    });
+    }).status(statusCode || 500);
 }
 
-export const home = () => successResponse('Welcome to Lendsqr API');
-export const notFound = () => errorResponse('Please check the link and try again.', 404);
+export const home = async (req, res) => {
+    return sendSuccess(res, 'Welcome to Lendsqr API.');
+}
+export const notFound = async () => {
+    return sendError(res, 'Please check the link and try again.', 404);
+}

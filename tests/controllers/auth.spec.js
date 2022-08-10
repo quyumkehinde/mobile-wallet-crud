@@ -11,7 +11,7 @@ describe('authentication', () => {
             const req = { body: { email: 'test@domain.com', password : 'password' } };
             jest.spyOn(UserRepository, 'createUser')
                 .mockImplementationOnce(() => [1]);
-            jest.spyOn(BaseController, 'successResponse')
+            jest.spyOn(BaseController, 'sendSuccess')
                 .mockImplementationOnce((res, message, data) => {
                     return {success: true, data, message};
                 });
