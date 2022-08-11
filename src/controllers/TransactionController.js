@@ -69,6 +69,7 @@ export const transferFund = async (req, res) => {
     }
     const { id: userId } = decryptJWT(token.split(' ')[1]);
     const recipientId = req.body.recipient_id, amount = req.body.amount;
+    
     if (recipientId === userId || !await findUserById(recipientId)) {
         return sendError(res, 'The recipient ID is invalid.', 400)
     }
@@ -76,17 +77,17 @@ export const transferFund = async (req, res) => {
     try {
         let debitId, creditId;
         await db.transaction(async trx => {
-            const [sender, recipient] = await Promise.all([
+            const [user, recipient] = await Promise.all([
                 findUserById(userId, trx),
                 findUserById(recipientId, trx),
             ]);
-            if (sender.account_balance < amount) {
+            if (user.account_balance < amount) {
                 throw new InsufficientBalanceException();
             }
             [debitId, creditId] = await Promise.all([
-                createTransaction(sender.id, amount, 'debit', 'transfer', trx),
+                createTransaction(user.id, amount, 'debit', 'transfer', trx),
                 createTransaction(recipient.id, amount, 'credit', 'transfer', trx),
-                decrementUserBalance(sender.id, amount, trx),
+                decrementUserBalance(user.id, amount, trx),
                 incrementUserBalance(recipient.id, amount, trx),
             ]);
             await createTransfer(creditId, debitId, amount, trx);
