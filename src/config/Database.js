@@ -1,7 +1,7 @@
 import knex from 'knex';
 import config from '../config.js';
 
-const db = knex({
+export const db = knex({
     client: config.DB_CONNECTION || 'mysql',
     connection: {
         host: config.DB_HOST || '127.0.0.1',

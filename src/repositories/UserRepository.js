@@ -1,4 +1,4 @@
-import db from "../config/Database.js";
+import { db } from "../config/Database.js";
 import { hashPassword } from "../utils/auth.js";
 
 export const createUser = async (email, password) => {
