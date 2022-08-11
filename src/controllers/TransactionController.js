@@ -1,4 +1,4 @@
-import db from "../config/Database.js";
+import {db} from "../config/Database.js";
 import { createTransaction, findTransactionById } from "../repositories/TransactionRepository.js";
 import { decrementUserBalance, findUserById, incrementUserBalance } from "../repositories/UserRepository.js";
 import { decryptJWT, isValidBearerToken } from "../utils/auth.js";
@@ -14,6 +14,7 @@ export const depositFund = async (req, res) => {
     
     try {
         let transactionId;
+        // console.log(db)
         await db.transaction(async trx => {
             const { id: userId } = decryptJWT(token.split(' ')[1]);
             [transactionId] = await Promise.all([

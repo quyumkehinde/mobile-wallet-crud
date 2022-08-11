@@ -4,7 +4,6 @@ import { checkPassword, generateJWT } from "../utils/auth.js";
 import { sendError, sendSuccess } from "./BaseController.js";
 
 export const register = async (req, res) => {
-    console.log(req)
     if (!req.body.email) return sendError(res, 'The email field is required', 400);
     if (!req.body.password) return sendError(res, 'The password field is required', 400);
     if (!isEmail(req.body.email)) return sendError(res, 'The email provided in invalid.', 400);
