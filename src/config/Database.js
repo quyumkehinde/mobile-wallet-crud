@@ -1,7 +1,7 @@
 import knex from 'knex';
 import config from '../config.js';
 
-export const db = knex({
+const db = knex({
     client: config.DB_CONNECTION || 'mysql',
     connection: {
         host: config.DB_HOST || '127.0.0.1',
@@ -14,3 +14,5 @@ export const db = knex({
         tableName: 'knex_migrations'
     }
 });
+
+export default db;

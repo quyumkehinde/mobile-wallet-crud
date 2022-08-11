@@ -1,4 +1,4 @@
-import { db } from "../config/Database.js"
+import db from "../config/Database.js"
 
 export const createTransfer = async (creditId, debitId, amount, trx) => {
     let response = db('transfers').insert({

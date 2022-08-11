@@ -1,4 +1,4 @@
-import {db} from "../config/Database.js";
+import db from "../config/Database.js";
 import { createTransaction, findTransactionById } from "../repositories/TransactionRepository.js";
 import { decrementUserBalance, findUserById, incrementUserBalance } from "../repositories/UserRepository.js";
 import { decryptJWT, isValidBearerToken } from "../utils/auth.js";
