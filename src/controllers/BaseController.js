@@ -1,16 +1,16 @@
 export const sendSuccess = (res, message, data) => {
-    return res.json({
+    return res.status(200).json({
         success: true,
         message: message || 'Success.',
         data: data || {}
-    }).status(200);
+    });
 };
 
 export const sendError = (res, message, statusCode) => {
-    return res.json({
+    return res.status(statusCode || 500).json({
         success: false,
         message: message || 'Error occured. Please try again later.',
-    }).status(statusCode || 500);
+    });
 };
 
 export const home = async (req, res) => {
