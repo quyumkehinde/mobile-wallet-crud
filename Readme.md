@@ -9,4 +9,5 @@ Here is my submission repo for the Lendsqr Backend Engineer role assessment.
 3. Create your .env file from .env.example
 4. Update your DB credentials in .env
 5. Install packages using npm by running ``npm install``
-6. Start your dev server by running ``npm run dev``
+6. Migrate your database by running ``npm run db:migrate``
+7. Start your dev server by running ``npm run dev``
