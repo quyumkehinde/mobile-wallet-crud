@@ -11,5 +11,6 @@ Here is my submission repo for the Lendsqr Backend Engineer role assessment.
 5. Install packages using npm by running ``npm install``
 6. Migrate your database by running ``npm run db:migrate``
 7. Start your dev server by running ``npm run dev``
+8. Run all tests by running ``npm run test``
 
 NOTE: You should run all CLI commands from the project root.
