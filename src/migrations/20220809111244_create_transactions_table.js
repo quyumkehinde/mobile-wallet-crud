@@ -16,7 +16,7 @@ export function up(knex) {
         t.enum('source', ['paymentProcessor', 'transfer']).notNullable();
         t.timestamps(true, true);
     });
-};
+}
 
 /**
  * @param { import("knex").Knex } knex
@@ -24,4 +24,4 @@ export function up(knex) {
  */
 export function down(knex) {
     return knex.schema.dropTable('transactions');
-};
+}

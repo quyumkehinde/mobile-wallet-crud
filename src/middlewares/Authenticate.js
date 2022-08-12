@@ -1,5 +1,5 @@
-import { sendError } from "../controllers/BaseController.js";
-import { isValidBearerToken } from "../utils/auth.js";
+import { sendError } from '../controllers/BaseController.js';
+import { isValidBearerToken } from '../utils/auth.js';
 
 export const Authenticate = (req, res, next) => {
     let token = req.headers.authorization;
@@ -7,4 +7,4 @@ export const Authenticate = (req, res, next) => {
         return sendError(res, 'Unauthorized!', 401);
     }
     next();
-}
+};

@@ -1,10 +1,10 @@
-import { db } from "../config/Database.js";
-import { createTransaction, findTransactionById } from "../repositories/TransactionRepository.js";
-import { decrementUserBalance, findUserById, incrementUserBalance } from "../repositories/UserRepository.js";
-import { decryptJWT } from "../utils/auth.js";
-import { sendSuccess, sendError } from "./BaseController.js";
-import { InsufficientBalanceException } from '../exceptions/TransactionExceptions.js'
-import { createTransfer } from "../repositories/TransferRepository.js";
+import { db } from '../config/Database.js';
+import { createTransaction, findTransactionById } from '../repositories/TransactionRepository.js';
+import { decrementUserBalance, findUserById, incrementUserBalance } from '../repositories/UserRepository.js';
+import { decryptJWT } from '../utils/auth.js';
+import { sendSuccess, sendError } from './BaseController.js';
+import { InsufficientBalanceException } from '../exceptions/TransactionExceptions.js';
+import { createTransfer } from '../repositories/TransferRepository.js';
 
 export const depositFund = async (req, res) => {
     const token = req.headers.authorization;
@@ -27,7 +27,7 @@ export const depositFund = async (req, res) => {
         console.log(err);
         return sendError(res, 'Error occured! Please try again.', 500);
     }
-}
+};
 
 export const withdrawFund = async (req, res) => {
     const token = req.headers.authorization;
@@ -57,7 +57,7 @@ export const withdrawFund = async (req, res) => {
         }
         return sendError(res, 'Error occured! Please try again.', 500);
     }
-}
+};
 
 export const transferFund = async (req, res) => {
     const token = req.headers.authorization;
@@ -71,7 +71,7 @@ export const transferFund = async (req, res) => {
     const recipientId = req.body.recipient_id, amount = req.body.amount;
     
     if (recipientId === userId || !await findUserById(recipientId)) {
-        return sendError(res, 'The recipient ID is invalid.', 400)
+        return sendError(res, 'The recipient ID is invalid.', 400);
     }
 
     try {
@@ -101,5 +101,5 @@ export const transferFund = async (req, res) => {
         }
         return sendError(res, 'Error occured! Please try again.', 500);
     }
-}
+};
 

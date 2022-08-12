@@ -1,7 +1,7 @@
-import isEmail from "validator/lib/isEmail.js";
-import { createUser, findUserByEmail } from "../repositories/UserRepository.js";
-import { checkPassword, generateJWT } from "../utils/auth.js";
-import { sendError, sendSuccess } from "./BaseController.js";
+import isEmail from 'validator/lib/isEmail.js';
+import { createUser, findUserByEmail } from '../repositories/UserRepository.js';
+import { checkPassword, generateJWT } from '../utils/auth.js';
+import { sendError, sendSuccess } from './BaseController.js';
 
 export const register = async (req, res) => {
     if (!req.body.email) return sendError(res, 'The email field is required', 400);
@@ -40,4 +40,4 @@ export const login = async (req, res) => {
         return sendError(res, 'Error occured! Please try again later.');
     }
 
-}
+};

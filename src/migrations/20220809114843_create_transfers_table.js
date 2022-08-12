@@ -18,7 +18,7 @@ export function up(knex) {
         t.decimal('amount', 19, 4).notNullable();
         t.timestamps(true, true);
     });
-};
+}
 
 /**
  * @param { import("knex").Knex } knex
@@ -26,4 +26,4 @@ export function up(knex) {
  */
 export function down(knex) {
     return knex.schema.dropTable('transfers');
-};
+}
