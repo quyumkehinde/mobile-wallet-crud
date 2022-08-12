@@ -11,6 +11,9 @@ export const depositFund = async (req, res) => {
     if (!req.body.amount) {
         return sendError(res, 'The amount field is required', 400);
     }
+    if (req.body.amount <= 0) {
+        return sendError(res, 'The minimum deposit is 1', 400);
+    }
     
     try {
         let transactionId;
@@ -33,6 +36,9 @@ export const withdrawFund = async (req, res) => {
     const token = req.headers.authorization;
     if (!req.body.amount) {
         return sendError(res, 'The amount field is required', 400);
+    }
+    if (req.body.amount <= 0) {
+        return sendError(res, 'The minimum withdrawal is 1', 400);
     }
 
     let transactionId;
@@ -66,6 +72,9 @@ export const transferFund = async (req, res) => {
     }
     if (!req.body.recipient_id) {
         return sendError(res, 'The recipient_id field is required', 400);
+    }
+    if (req.body.amount <= 0) {
+        return sendError(res, 'The minimum amount you can transfer is 1', 400);
     }
     const { id: userId } = decryptJWT(token.split(' ')[1]);
     const recipientId = req.body.recipient_id, amount = req.body.amount;

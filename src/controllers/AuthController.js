@@ -39,5 +39,4 @@ export const login = async (req, res) => {
         console.log(err); // NOTE: In prod, proper error logging system such as logstash or sentry would be used.
         return sendError(res, 'Error occured! Please try again later.');
     }
-
 };

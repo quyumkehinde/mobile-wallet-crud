@@ -1,4 +1,4 @@
-import {login, register} from '../../src/controllers/AuthController.js'; 
+import { login, register } from '../../src/controllers/AuthController.js'; 
 import * as BaseController from '../../src/controllers/BaseController.js';
 import * as UserRepository from '../../src/repositories/UserRepository.js';
 import * as auth from '../../src/utils/auth.js';

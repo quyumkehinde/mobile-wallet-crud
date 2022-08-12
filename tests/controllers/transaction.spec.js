@@ -92,6 +92,15 @@ describe('transaction', () => {
             expect(response.body.data).toMatchObject(creditTransaction);
         });
 
+        test('user get an error if amount is less than 1', async () => {
+            const req = { 
+                headers: { authorization: 'Bearer token' },
+                body: { amount: -1 }
+            };
+            const response = await depositFund(req, res);
+            expect(response.body.message).toBe('The minimum deposit is 1');
+        });
+
         test('user get an error if a db error occur', async () => {
             const req = { 
                 headers: { authorization: 'Bearer token' },
@@ -169,6 +178,15 @@ describe('transaction', () => {
                 );
             const response = await withdrawFund(req, res);
             expect(response.body.message).toBe((new InsufficientBalanceException()).message);
+        });
+
+        test('user get an error if amount is less than 1', async () => {
+            const req = { 
+                headers: { authorization: 'Bearer token' },
+                body: { amount: -1 }
+            };
+            const response = await withdrawFund(req, res);
+            expect(response.body.message).toBe('The minimum withdrawal is 1');
         });
 
         test('user get an error when a db error occur', async () => {
@@ -272,6 +290,15 @@ describe('transaction', () => {
                 .mockImplementationOnce(token => jwtInfo);
             const response = await transferFund(req, res);
             expect(response.body.message).toBe('The recipient ID is invalid.');
+        });
+
+        test('user get an error if amount is less than 1', async () => {
+            const req = { 
+                headers: { authorization: 'Bearer token' },
+                body: { amount: -1, recipient_id: 2 }
+            };
+            const response = await transferFund(req, res);
+            expect(response.body.message).toBe('The minimum amount you can transfer is 1');
         });
 
         test('user get an error if a db error occur', async () => {
