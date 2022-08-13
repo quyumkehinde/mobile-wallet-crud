@@ -14,3 +14,36 @@ Here is my submission repo for the Lendsqr Backend Engineer role assessment.
 8. Run all tests by running ``npm run test``
 
 NOTE: You should run all CLI commands from the project root.
+
+## Routes
+
+### Non-auth Routes
+
+#### Registration
+
+Endpoint - ``/api/v1/register``
+Payload - **email**, **password**
+
+#### Login
+
+Endpoint - ``/api/v1/login``
+Payload - **email**, **password**
+
+### Auth Routes
+
+You can access any of these routes by providing a bearer token as part of your request header.
+
+#### Deposit fund
+
+Endpoint - ``/api/v1/wallet/deposit``
+Payload - **amount**
+
+#### Withdraw fund
+
+Endpoint - ``/api/v1/wallet/withdraw``
+Payload - **amount**
+
+#### Transfer fund
+
+Endpoint - ``/api/v1/wallet/transfer``
+Payload - **amount**, **recipient_id**
