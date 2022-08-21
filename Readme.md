@@ -1,7 +1,3 @@
-# Lendsqr assessment
-
-Here is my submission repo for the Lendsqr Backend Engineer role assessment.
-
 ## Project setup
 
 1. Clone this repo.
